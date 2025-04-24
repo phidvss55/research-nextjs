@@ -1,46 +1,46 @@
-import React, { DragEvent, Fragment, useRef, useState } from 'react';
-import { ColumnType } from './TableProps';
+import React, { type DragEvent, Fragment, useRef, useState } from 'react'
+import { type ColumnType } from './TableProps'
 
 interface Props<T> {
-  columns: ColumnType<T>[];
-  isSelectBox?: boolean;
+  columns: Array<ColumnType<T>>
+  isSelectBox?: boolean
   checkAll: {
-    handleCheckAll: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    isCheckAll: boolean;
-  };
-  resize?: boolean;
+    handleCheckAll: (e: React.ChangeEvent<HTMLInputElement>) => void
+    isCheckAll: boolean
+  }
+  resize?: boolean
 }
 
 const createHeaders = (headers: any[]) => {
-  return headers.map((item) => ({ item, ref: useRef(null) }));
-};
+  return headers.map((item) => ({ item, ref: useRef(null) }))
+}
 
-function TableHeader<T>({ columns, isSelectBox, checkAll, resize }: Props<T>) {
-  const [drag, setDrag] = useState<{ iniMouse: number; iniSize: number }>();
+function TableHeader<T> ({ columns, isSelectBox, checkAll, resize }: Props<T>) {
+  const [drag, setDrag] = useState<{ iniMouse: number, iniSize: number }>()
   const NORef = useRef(null)
-  const listColumn = createHeaders(columns);
+  const listColumn = createHeaders(columns)
 
   const handleStart = (ref: any) => (e: DragEvent<HTMLDivElement>) => {
-    const iniMouse = e.clientX;
-    const iniSize = ref.current.offsetWidth;
-    console.table([iniMouse, iniSize]);
+    const iniMouse = e.clientX
+    const iniSize = ref.current.offsetWidth
+    console.table([iniMouse, iniSize])
     setDrag({
       iniMouse,
-      iniSize,
-    });
-  };
+      iniSize
+    })
+  }
 
   const handleMove = (ref: any) => (e: DragEvent<HTMLDivElement>) => {
-    if (e.clientX && drag) {
-      const iniMouse = drag.iniMouse;
-      const iniSize = drag.iniSize;
-      const endMouse = e.clientX;
+    if (e.clientX && (drag != null)) {
+      const iniMouse = drag.iniMouse
+      const iniSize = drag.iniSize
+      const endMouse = e.clientX
 
-      const endSize = iniSize + (endMouse - iniMouse);
+      const endSize = iniSize + (endMouse - iniMouse)
 
-      ref.current.style.width = `${endSize}px`;
+      ref.current.style.width = `${endSize}px`
     }
-  };
+  }
 
   return (
     <tr role="row">
@@ -103,7 +103,7 @@ function TableHeader<T>({ columns, isSelectBox, checkAll, resize }: Props<T>) {
         </Fragment>
       ))}
     </tr>
-  );
+  )
 }
 
-export default TableHeader;
+export default TableHeader

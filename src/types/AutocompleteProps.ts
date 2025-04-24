@@ -1,42 +1,42 @@
-export type OptionType = {
-  label: string;
-  value: string;
-};
+export interface OptionType {
+  label: string
+  value: string
+}
 
-export type AutocompleteProps<T> = {
+export interface AutocompleteProps<T> {
   /**
    * Is show label or not
    * @default true
    */
-  showLabel?: boolean;
+  showLabel?: boolean
   /**
    * Label above the input
    */
-  label: string;
+  label: string
   /**
    * Options for selecting
    */
-  options: T[];
+  options: T[]
   /**
    * Allow to select multiple
    */
-  multiple?: boolean;
+  multiple?: boolean
   /**
    *
    * @param option
    * @returns
    */
-  getOptionLabel?: (option: any) => string;
+  getOptionLabel?: (option: any) => string
   /**
    * Get label to show option
    * @param option
    * @returns
    */
-  getSelectedOptionLabel?: (option: any) => string;
+  getSelectedOptionLabel?: (option: any) => string
   /**
    * Get label when option was selected
    * @param option
    * @returns
    */
-  onSelect: (option: any) => void;
-};
+  onSelect: (option: any) => void
+}

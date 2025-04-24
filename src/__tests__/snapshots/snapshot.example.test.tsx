@@ -1,4 +1,4 @@
-import HelloComponent from "@/components/basetest/HelloComponent"
+import HelloComponent from '@/components/basetest/HelloComponent'
 import { render, screen } from '@testing-library/react'
 
 describe('Testing snapshot example', () => {
@@ -6,12 +6,12 @@ describe('Testing snapshot example', () => {
     const user = {
       createdAt: new Date(),
       id: Math.floor(Math.random() * 20),
-      name: 'LeBron James',
-    };
+      name: 'LeBron James'
+    }
 
     expect(user).toMatchSnapshot({
       createdAt: expect.any(Date),
-      id: expect.any(Number),
-    });
-  });
+      id: expect.any(Number)
+    })
+  })
 })

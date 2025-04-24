@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/notifications/ReactNotification.tsx.bk", "src/utils/firebase.ts",],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/lib/notifications/ReactNotification.tsx.bk", "src/utils/firebase.ts", "public/serviceWorker.ts",],
   "exclude": ["node_modules"]
 }

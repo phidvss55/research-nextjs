@@ -1,20 +1,20 @@
 // apiEndpointHandler.ts
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getDataTableData } from '@/apis/datatable.repository';
+import { type NextApiRequest, type NextApiResponse } from 'next'
+import { getDataTableData } from '@/apis/datatable.repository'
 
-export async function apiEndpointHandler(req: NextApiRequest, res: NextApiResponse) {
+export async function apiEndpointHandler (req: NextApiRequest, res: NextApiResponse) {
   try {
-    const data = await getDataTableData();
+    const data = await getDataTableData()
     const response = {
       success: true,
       data: [],
-      users: data,
-    };
-    res.statusCode = 200;
-    res.send(response);
+      users: data
+    }
+    res.statusCode = 200
+    res.send(response)
   } catch (error) {
-    console.error('Error occurred:', error);
-    res.statusCode = 500;
-    res.send({ success: false, error: 'Internal Server Error' });
+    console.error('Error occurred:', error)
+    res.statusCode = 500
+    res.send({ success: false, error: 'Internal Server Error' })
   }
 }

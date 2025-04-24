@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
-import Sidebar from './Sidebar';
+import React, { type ReactNode } from 'react'
+import Sidebar from './Sidebar'
 
-type PageProps = {
-	children?: ReactNode | undefined;
-};
+interface PageProps {
+  children?: ReactNode | undefined
+}
 
 const MainLayout = ({ children }: PageProps) => {
-	return (
+  return (
 		<>
 			<header className="h-16 text-center border border-spacing-1 border-gray-300"></header>
 			<main className="flex">
@@ -14,7 +14,7 @@ const MainLayout = ({ children }: PageProps) => {
 				{children}
 			</main>
 		</>
-	);
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

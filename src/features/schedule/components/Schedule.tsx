@@ -1,14 +1,14 @@
-import React from 'react';
-import ScheduleSearch from './ScheduleSearch';
-import ScheduleTable from './ScheduleTable';
+import React from 'react'
+import ScheduleSearch from './ScheduleSearch'
+import ScheduleTable from './ScheduleTable'
 
 const Schedule = () => {
-    return (
+  return (
         <>
             <ScheduleSearch />
             <ScheduleTable />
         </>
-    );
-};
+  )
+}
 
-export default Schedule;
+export default Schedule

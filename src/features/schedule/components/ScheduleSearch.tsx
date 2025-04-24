@@ -1,30 +1,30 @@
-import ShowAutocomplete from '@/demos/autocomplete';
-import React, { useState } from 'react';
+import ShowAutocomplete from '@/demos/autocomplete'
+import React, { useState, useEffect } from 'react'
 import { getListLane } from '@/apis/datatable.repository'
-import { useEffect } from 'react'
-import ShowDatePicker from '@/demos/datepicker';
-import CustomSelect from '@/components/form/FormSelect';
+
+import ShowDatePicker from '@/demos/datepicker'
+import CustomSelect from '@/components/form/FormSelect'
 
 interface Lane {
-    id: string;
-    lane_code: string;
-    lane_name: string;
-    lane_service_type: string;
-    pk_skd_type: any[];
+  id: string
+  lane_code: string
+  lane_name: string
+  lane_service_type: string
+  pk_skd_type: any[]
 }
 
 const ScheduleSearch = () => {
-    const [lanes, setLanes] = useState<Lane[]>([]);
+  const [lanes, setLanes] = useState<Lane[]>([])
 
-    useEffect(() => {
-        async function getBranchName() {
-            const res = await getListLane()
-            setLanes(res)
-        }
-        getBranchName()
-    }, []);
+  useEffect(() => {
+    async function getBranchName () {
+      const res = await getListLane()
+      setLanes(res)
+    }
+    getBranchName()
+  }, [])
 
-    return (
+  return (
         <div className="h-32 border border-gray-300 w-full flex">
             <div className='w-1/4 px-1'>
                 <ShowAutocomplete options={lanes} />
@@ -36,7 +36,7 @@ const ScheduleSearch = () => {
                 <CustomSelect labelSelect='SKD' getOptionData={(opt: Lane) => ({ label: `${opt.lane_code} - ${opt.lane_name}`, value: opt.lane_code })} options={lanes} isMultiple={true} />
             </div>
         </div>
-    );
-};
+  )
+}
 
-export default ScheduleSearch;
+export default ScheduleSearch

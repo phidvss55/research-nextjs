@@ -1,9 +1,9 @@
-import { Montserrat } from 'next/font/google';
-import Head from 'next/head';
-import MainLayout from '@/layouts/MainLayout';
-import FirebaseNotify from '@/layouts/FirebaseNotify';
+import { Montserrat } from 'next/font/google'
+import Head from 'next/head'
+import MainLayout from "@/layouts/MainLayout"
+import FirebaseNotify from '@/layouts/FirebaseNotify'
 
-const montserrat = Montserrat({ subsets: ['latin'] });
+const montserrat = Montserrat({ subsets: ['latin'] })
 
 export default function Home() {
   return (
@@ -23,5 +23,5 @@ export default function Home() {
         </MainLayout>
       </div>
     </>
-  );
+  )
 }

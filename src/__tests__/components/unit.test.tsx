@@ -13,13 +13,11 @@ describe('Testing Schedule Search Component', () => {
 
     await userEvent.selectOptions(
       screen.getByRole('listbox'),
-      screen.getByRole('option', { name: 'A' }),
+      screen.getByRole('option', { name: 'A' })
     )
 
-    expect((screen.getByRole('option', { name: 'A' }) as HTMLOptionElement).selected).toBe(true)
-    expect((screen.getByRole('option', { name: 'B' }) as HTMLOptionElement).selected).toBe(false)
-    expect((screen.getByRole('option', { name: 'C' }) as HTMLOptionElement).selected).toBe(false)
+    expect((screen.getByRole('option', { name: 'A' })).selected).toBe(true)
+    expect((screen.getByRole('option', { name: 'B' })).selected).toBe(false)
+    expect((screen.getByRole('option', { name: 'C' })).selected).toBe(false)
   })
-
 })
-

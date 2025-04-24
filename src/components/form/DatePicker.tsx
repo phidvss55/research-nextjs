@@ -1,20 +1,20 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import moment, { Moment } from 'moment';
-import Image from 'next/image';
-import { AngleDoubleLeft, AngleDoubleRight, AngleLeft, AngleRight, Calendar, CaretDown, CaretUp } from '@/assets/icons';
-import useClickOutside from '@/lib/hooks/useClickoutside';
-import { setTimeout } from 'timers';
-import { getYears } from '@/utils/format';
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import moment, { type Moment } from 'moment'
+import Image from 'next/image'
+import { AngleDoubleLeft, AngleDoubleRight, AngleLeft, AngleRight, Calendar, CaretDown, CaretUp } from '@/assets/icons'
+import useClickOutside from '@/lib/hooks/useClickoutside'
+import { setTimeout } from 'timers'
+import { getYears } from '@/utils/format'
 
 interface DatePickerProps {
   /**
    * label display
    */
-  label?: string | null;
+  label?: string | null
   /**
    * The selected value
    */
-  value?: Moment | null;
+  value?: Moment | null
   /**
    * custom format from user
    */
@@ -22,32 +22,32 @@ interface DatePickerProps {
   /**
    * is input was disable
    */
-  disable?: boolean;
+  disable?: boolean
   /**
    * @param value
    * @returns
    */
-  onChange: (value: any) => void;
+  onChange: (value: any) => void
 }
 
 const defaultFormat = 'MMMM D, YYYY'
 const CODE_FORMAT = 'YYYY-MM-DD'
 
 const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, format = defaultFormat, onChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isShowYear, setIsShowYear] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [isShowYear, setIsShowYear] = useState(false)
   const [dayOfMonths, setDayOfMonths] = useState<any[]>([])
 
   /* get value from prop if it was passed from user */
-  const [dateObjSelected, setDateObjSelected] = useState<moment.Moment | null>(value || null);
+  const [dateObjSelected, setDateObjSelected] = useState<moment.Moment | null>((value != null) || null)
   /* date use to handle mainly in component */
-  const [dateShowing, setDateShowing] = useState<any>(dateObjSelected || moment(new Date()))
+  const [dateShowing, setDateShowing] = useState<any>((dateObjSelected != null) || moment(new Date()))
   /* this date use to trigger for re-render component */
   const [dateCheck, setDateCheck] = useState(dateShowing.format(format))
   /* date showing at input  */
-  const [dateInput, setDateInput] = useState<any>(value ? value.format(format) : null)
+  const [dateInput, setDateInput] = useState<any>((value != null) ? value.format(format) : null)
 
-  let [dateSelected, setDateSelected] = useState<any>(dateShowing ? dateShowing.format(CODE_FORMAT) : null)
+  const [dateSelected, setDateSelected] = useState<any>(dateShowing ? dateShowing.format(CODE_FORMAT) : null)
   const ref = useRef<HTMLDivElement>(null)
 
   const onClickClose = () => {
@@ -58,11 +58,11 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
   useClickOutside(ref, onClickClose)
 
   useEffect(() => {
-    let dateHandling = dateShowing.clone()
-    const startWeek = dateHandling.startOf('month').day();
+    const dateHandling = dateShowing.clone()
+    const startWeek = dateHandling.startOf('month').day()
 
     /* use to store date of previous month */
-    let dateDummy = []
+    const dateDummy = []
     for (let i = 0; i < startWeek; i++) {
       dateDummy.push({ show: false, day: 0, full: null })
     }
@@ -71,7 +71,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
     const _dayOfMonths = Array(dateHandling.daysInMonth())
       .fill(0)
       .map((_, index) => {
-        let current = moment().month(dateHandling.month()).year(dateHandling.year()).date(index + 1)
+        const current = moment().month(dateHandling.month()).year(dateHandling.year()).date(index + 1)
         return {
           show: true,
           day: index + 1,
@@ -83,24 +83,24 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
 
   const handleSelectDate = (date: moment.Moment) => {
     setDateSelected(date.format(CODE_FORMAT))
-    setDateShowing(date);
-    setDateObjSelected(date);
+    setDateShowing(date)
+    setDateObjSelected(date)
     setDateCheck(date.format(format))
     setDateInput(date.format(format))
 
-    onChange(date);
+    onChange(date)
     setIsOpen(false)
-  };
+  }
 
   const handleBtnHeader = (action: 'add' | 'minus', value: number) => {
-    let newDate = dateShowing.clone()
+    const newDate = dateShowing.clone()
     if (action === 'add') {
       newDate.add(value, 'months')
     } else {
       newDate.subtract(value, 'month')
     }
 
-    let newDateShowing = moment(new Date()).utc().set('month', newDate.month()).set('year', newDate.year()).clone()
+    const newDateShowing = moment(new Date()).utc().set('month', newDate.month()).set('year', newDate.year()).clone()
     setTimeout(() => {
       setDateShowing(newDateShowing)
       setIsShowYear(false)
@@ -117,9 +117,9 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
   const handleOnOpenYear = () => {
     setIsShowYear(!isShowYear)
     setTimeout(() => {
-      let id = dateShowing.year()
-      let ele = document.getElementById(`${id}`)
-      ele?.scrollIntoView({ block: "center", inline: "nearest" })
+      const id = dateShowing.year()
+      const ele = document.getElementById(`${id}`)
+      ele?.scrollIntoView({ block: 'center', inline: 'nearest' })
     })
   }
 
@@ -136,14 +136,14 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
 
   /* if datepicker was open at the bottom -> move above input */
   useEffect(() => {
-    const boxHeight = ref.current?.getBoundingClientRect().height;
-    const screenBottom = window.innerHeight;
+    const boxHeight = ref.current?.getBoundingClientRect().height
+    const screenBottom = window.innerHeight
     const datePicker = ref.current?.previousSibling
     if (datePicker instanceof Element) {
-      const buttonBottom = datePicker?.getBoundingClientRect().bottom;
+      const buttonBottom = datePicker?.getBoundingClientRect().bottom
       if (buttonBottom && boxHeight && buttonBottom + boxHeight > screenBottom) {
         ref.current.style.top = 'auto'
-        ref.current.style.bottom = "100%";
+        ref.current.style.bottom = '100%'
       }
     }
   }, [isOpen])
@@ -151,7 +151,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
   return (
     <div className="relative">
       {label && <label htmlFor={label} className='text-sm md:text-base'>{label}</label>}
-      <div className='relative' onClick={() => !disable ? setIsOpen(true) : null}>
+      <div className='relative' onClick={() => { !disable ? setIsOpen(true) : null }}>
         <input
           id={label || ''}
           type="text"
@@ -171,10 +171,10 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
             <div className="bg-white border border-gray-300 rounded-lg shadow-lg relative min-w-[300px]">
               <div className="flex justify-between p-2 bg-gray-200 items-center">
                 <div className='flex'>
-                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleBtnHeader('minus', 12)}>
+                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => { handleBtnHeader('minus', 12) }}>
                     <Image src={AngleDoubleLeft} alt="" width={24} />
                   </button>
-                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleBtnHeader('minus', 1)}>
+                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => { handleBtnHeader('minus', 1) }}>
                     <Image src={AngleLeft} alt="" width={20} />
                   </button>
                 </div>
@@ -185,10 +185,10 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
                 </div>
 
                 <div className='flex'>
-                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleBtnHeader('add', 1)}>
+                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => { handleBtnHeader('add', 1) }}>
                     <Image src={AngleRight} alt="" width={20} />
                   </button>
-                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => handleBtnHeader('add', 12)}>
+                  <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={() => { handleBtnHeader('add', 12) }}>
                     <Image src={AngleDoubleRight} alt="" width={24} />
                   </button>
                 </div>
@@ -198,7 +198,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
               {isShowYear && (
                 <div className='grid grid-cols-4 absolute bg-white h-72 p-1 overflow-y-scroll left-0 top-10 border border-gray-300 font-medium w-full'>
                   {getYears().map((item: number) => (
-                    <div id={item.toString()} onClick={() => onChangeYear(item)} key={item}
+                    <div id={item.toString()} onClick={() => { onChangeYear(item) }} key={item}
                       className={`text-center rounded-full my-1 py-2 mx-1 ${dateShowing.clone().year() === item ? 'bg-blue-600 text-white cursor-default' : 'hover:bg-slate-200 cursor-pointer'}`}>{item}</div>
                   ))}
                 </div>
@@ -225,14 +225,16 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
                   {dayOfMonths && dayOfMonths.map((item, index) => (
                     <Fragment key={`${item.show}-${index}`}>
                       {
-                        item.show ? (
+                        item.show
+                          ? (
                           <div className={`text-sm text-center py-1 
                            ${dateSelected === item.full ? 'bg-blue-500 text-white rounded-lg cursor-default' : 'rounded-lg hover:bg-gray-100 cursor-pointer'}`}
-                            onClick={() => handleSelectDate(dateShowing.clone().date(item.day))}
+                            onClick={() => { handleSelectDate(dateShowing.clone().date(item.day)) }}
                           >
                             {item.day}
                           </div>
-                        ) : (<div></div>)
+                            )
+                          : (<div></div>)
                       }
                     </Fragment>
                   ))}
@@ -255,7 +257,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ label, disable = false, value, 
         )
       }
     </div >
-  );
-};
+  )
+}
 
-export default DatePicker;
+export default DatePicker

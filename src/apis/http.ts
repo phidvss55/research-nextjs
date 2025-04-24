@@ -1,50 +1,50 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios'
 
 export const createHttp = (baseURL: string | undefined) => {
   const options: AxiosRequestConfig = {
-    baseURL: baseURL,
-  };
+    baseURL
+  }
 
-  const http = axios.create(options);
+  const http = axios.create(options)
 
   const attachCookieToHeaders = (): string => {
-    return '';
-  };
+    return ''
+  }
 
   // Add a request interceptor
   http.interceptors.request.use(
     async (config: any) => {
       if (config.url != '/login' && config.baseURL != null) {
         try {
-          let accessToken = attachCookieToHeaders();
+          const accessToken = attachCookieToHeaders()
 
-          config.headers['Authorization'] = accessToken || '';
-          config.headers = config.headers || {};
+          config.headers.Authorization = accessToken || ''
+          config.headers = config.headers || {}
         } catch (e) {
-          console.log(e);
+          console.log(e)
         }
       }
 
       // Do something before request is sent
-      return config;
+      return config
     },
-    (error: any) => {
+    async (error: any) => {
       // Do something with request error
-      return Promise.reject(error);
+      return await Promise.reject(error)
     }
-  );
+  )
 
   // Add a response interceptor
   http.interceptors.response.use(
     (response: any) => {
       // Do something with response data
-      return response.data;
+      return response.data
     },
-    (error: any) => {
+    async (error: any) => {
       // Do something with response error
-      return Promise.reject(error);
+      return await Promise.reject(error)
     }
-  );
+  )
 
-  return http;
-};
+  return http
+}

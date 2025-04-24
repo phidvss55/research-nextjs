@@ -1,15 +1,15 @@
-import Autocomplete from "@/components/form/Autocomplete";
-import { OptionType } from "@/types/AutocompleteProps";
+import Autocomplete from '@/components/form/Autocomplete'
+import { type OptionType } from '@/types/AutocompleteProps'
 
 interface ComponentProps<T> {
-  options: T[],
+  options: T[]
   show?: boolean
 }
 
 const ShowAutocomplete = <T extends object>({ options, show = false }: ComponentProps<T>) => {
   const handleSelect = (option: OptionType) => {
-    console.log('Selected option:', option);
-  };
+    console.log('Selected option:', option)
+  }
 
   return (
     <div className="" >
@@ -21,8 +21,7 @@ const ShowAutocomplete = <T extends object>({ options, show = false }: Component
         getOptionLabel={(option) => `${option.lane_code} - ${option.lane_name}`}
         onSelect={handleSelect} />
     </div >
-  );
-
+  )
 }
 
-export default ShowAutocomplete;
+export default ShowAutocomplete

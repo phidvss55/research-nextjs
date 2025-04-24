@@ -1,12 +1,12 @@
-import { DataTable } from '@/types/table.type';
-import { baseApi } from './baseApi';
-import { APIDomain } from './baseURL';
+import { type DataTable } from '@/types/table.type'
+import { baseApi } from './baseApi'
+import { APIDomain } from './baseURL'
 
-let client = new baseApi(APIDomain);
+const client = new baseApi(APIDomain)
 
-export function getListLane() {
-    return client.get('/lane');
+export async function getListLane () {
+  return await client.get('/lane')
 }
-export function getDataTableData(): Promise<DataTable[]> {
-    return client.get('/datatable');
+export async function getDataTableData (): Promise<DataTable[]> {
+  return await client.get('/datatable')
 }

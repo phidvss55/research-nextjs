@@ -3,12 +3,11 @@ import { getMessaging, getToken } from 'firebase/messaging'
 import { app, db } from '@/utils/firebase'
 import { collection, getDocs, query, where, addDoc } from 'firebase/firestore'
 
-
 const FirebaseNotify = () => {
   const requestPermission = async () => {
     const permission = await Notification.requestPermission()
     if (permission === 'granted') {
-      const messaging = getMessaging(app);
+      const messaging = getMessaging(app)
 
       const token = await getToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_VAPID_KEY
@@ -30,6 +29,7 @@ const FirebaseNotify = () => {
       alert('You  denied for the notification')
       await Notification.requestPermission().then((permission) => {
         requestPermission()
+        console.log('permision', permission)
       })
     }
   }

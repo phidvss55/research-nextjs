@@ -1,6 +1,6 @@
-import { AutocompleteProps } from "@/types/AutocompleteProps";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type AutocompleteProps } from '@/types/AutocompleteProps'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 import { Down_2, Up2, Close } from '@/assets/icons'
 
 const defaultLabel = (option: any) => option.label
@@ -16,35 +16,34 @@ const Autocomplete = <T extends object>({
   onSelect
 }: AutocompleteProps<T>) => {
   /* list option filted from string user typing */
-  const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState<any[]>([])
   /* Using for multiple option */
-  const [selectedValues, setSelectedValues] = useState<any[]>([]);
+  const [selectedValues, setSelectedValues] = useState<any[]>([])
   /* input text typing */
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('')
   /* Open banner list options */
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   /* autocomplete ref */
-  const atcplRef = useRef<HTMLInputElement | null>(null);
+  const atcplRef = useRef<HTMLInputElement | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
-
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (atcplRef.current && !atcplRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+      if ((atcplRef.current != null) && !atcplRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
       }
-    };
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [atcplRef]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [atcplRef])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-    setIsOpen(true);
-  };
+    setInputValue(event.target.value)
+    setIsOpen(true)
+  }
 
   const highlightText = (text: string) => {
     return text.replace(new RegExp(inputValue, 'gi'), (match) => {
@@ -54,12 +53,12 @@ const Autocomplete = <T extends object>({
 
   useEffect(() => {
     const filtered = options?.filter((option: any) => {
-      let _option = getOptionLabel(option)
+      const _option = getOptionLabel(option)
       return _option.toLowerCase().includes(inputValue.toLowerCase())
     }
-    );
-    setFilteredOptions(filtered);
-  }, [options, inputValue]);
+    )
+    setFilteredOptions(filtered)
+  }, [options, inputValue])
 
   const handleOptionSelect = (option: any) => {
     if (multiple) {
@@ -69,17 +68,17 @@ const Autocomplete = <T extends object>({
       } else {
         newSelectedValues = [...selectedValues, option]
       }
-      setSelectedValues(newSelectedValues);
-      onSelect(newSelectedValues);
-      setInputValue('');
+      setSelectedValues(newSelectedValues)
+      onSelect(newSelectedValues)
+      setInputValue('')
     } else {
-      let _newValue = getSelectedOptionLabel(option) || getOptionLabel(option)
-      setInputValue(_newValue);
-      setSelectedValues([_newValue]);
-      onSelect(option);
-      setIsOpen(false);
+      const _newValue = getSelectedOptionLabel(option) || getOptionLabel(option)
+      setInputValue(_newValue)
+      setSelectedValues([_newValue])
+      onSelect(option)
+      setIsOpen(false)
     }
-  };
+  }
 
   const clearAllSelected = () => {
     setSelectedValues([])
@@ -92,15 +91,15 @@ const Autocomplete = <T extends object>({
   }
 
   const handleRemove = (value: string) => {
-    const newSelectedValues = selectedValues.filter((v) => v !== value);
-    setSelectedValues(newSelectedValues);
-    onSelect(newSelectedValues);
-  };
+    const newSelectedValues = selectedValues.filter((v) => v !== value)
+    setSelectedValues(newSelectedValues)
+    onSelect(newSelectedValues)
+  }
 
   const renderSelectedValue = (option: any, index: number) => (
     <div key={index} className="mr-2 my-2 flex text-sm md:text-base justify-center items-center bg-slate-200 rounded-md z-10 h-fit overflow-hidden">
       <span className="overflow-hidden pl-2 pr-1 whitespace-nowrap text-ellipsis">{getSelectedOptionLabel(option) || getOptionLabel(option)}</span>
-      <Image src={Close} alt="" width={"14"} className={"mr-2 cursor-pointer z-1"} onClick={() => handleRemove(option)} />
+      <Image src={Close} alt="" width={'14'} className={'mr-2 cursor-pointer z-1'} onClick={() => { handleRemove(option) }} />
     </div>
   )
 
@@ -117,7 +116,7 @@ const Autocomplete = <T extends object>({
           ))
         }
 
-        <div className={`relative flex-1 ${multiple && selectedValues.length ? 'ml-10' : ''}`}>
+        <div className={`relative flex-1 ${multiple && (selectedValues.length > 0) ? 'ml-10' : ''}`}>
           <input
             ref={inputRef}
             className={
@@ -128,20 +127,24 @@ const Autocomplete = <T extends object>({
             type="text"
             autoComplete="off"
             value={inputValue}
-            onFocus={() => setIsOpen(true)}
+            onFocus={() => { setIsOpen(true) }}
             onChange={handleInputChange} />
-          {isOpen ? (
+          {isOpen
+            ? (
             <Image
-              onClick={() => setIsOpen(false)}
+              onClick={() => { setIsOpen(false) }}
               src={Up2} alt="" className="absolute top-1/3 right-3 cursor-pointer z-10" width={16} />
-          ) : (
+              )
+            : (
             <Image
-              onClick={() => setIsOpen(true)}
+              onClick={() => { setIsOpen(true) }}
               src={Down_2} alt="" className="absolute top-1/3 right-3 cursor-pointer z-10" width={16} />
-          )}
-          {multiple && selectedValues.length ? (
+              )}
+          {multiple && (selectedValues.length > 0)
+            ? (
             <Image src={Close} alt="" onClick={clearAllSelected} width="16" className="absolute top-1/3 right-8 cursor-pointer z-20" />
-          ) : null}
+              )
+            : null}
         </div>
       </div>
 
@@ -152,7 +155,7 @@ const Autocomplete = <T extends object>({
               <li
                 key={_i}
                 className={`px-2 py-1 cursor-pointer hover:bg-gray-100 border-b-1 min-h-32 box-border ${checkOptionIsSelected(option) ? 'bg-selected' : ''}`}
-                onClick={() => handleOptionSelect(option)}
+                onClick={() => { handleOptionSelect(option) }}
                 dangerouslySetInnerHTML={{ __html: highlightText(getOptionLabel(option)) }}
               >
               </li>
@@ -161,8 +164,7 @@ const Autocomplete = <T extends object>({
         )
       }
     </div >
-  );
-
+  )
 }
 
-export default Autocomplete;
+export default Autocomplete

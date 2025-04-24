@@ -1,59 +1,59 @@
-import { createHttp } from "./http";
+import { createHttp } from './http'
 
 class baseApi {
-  private client;
-  constructor(baseUrl: string) {
-    this.client = createHttp(baseUrl);
+  private readonly client
+  constructor (baseUrl: string) {
+    this.client = createHttp(baseUrl)
   }
 
-  get(url: string, conf = {}) {
-    return this.client
+  async get (url: string, conf = {}) {
+    return await this.client
       .get(url, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  delete(url: string, conf = {}) {
-    return this.client
+  async delete (url: string, conf = {}) {
+    return await this.client
       .delete(url, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  head(url: string, conf = {}) {
-    return this.client
+  async head (url: string, conf = {}) {
+    return await this.client
       .head(url, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  options(url: string, conf = {}) {
-    return this.client
+  async options (url: string, conf = {}) {
+    return await this.client
       .options(url, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  post(url: string, data = {}, conf = {}) {
-    return this.client
+  async post (url: string, data = {}, conf = {}) {
+    return await this.client
       .post(url, data, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  put(url: string, data = {}, conf = {}) {
-    return this.client
+  async put (url: string, data = {}, conf = {}) {
+    return await this.client
       .put(url, data, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 
-  patch(url: string, data = {}, conf = {}) {
-    return this.client
+  async patch (url: string, data = {}, conf = {}) {
+    return await this.client
       .patch(url, data, conf)
-      .then((response: any) => Promise.resolve(response))
-      .catch((error: any) => Promise.reject(error));
+      .then(async (response: any) => await Promise.resolve(response))
+      .catch(async (error: any) => await Promise.reject(error))
   }
 }
 
-export { baseApi };
+export { baseApi }

@@ -1,5 +1,5 @@
-import ManageColumns from "@/components/form/FormTable/ManageColumns"
-import ScheduleTable from "@/features/schedule/components/ScheduleTable"
+import ManageColumns from '@/components/form/FormTable/ManageColumns'
+import ScheduleTable from '@/features/schedule/components/ScheduleTable'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -31,4 +31,3 @@ describe('Testing Schedule Search Component', () => {
     expect(rows).not.toHaveLength(2) // 1
   })
 })
-

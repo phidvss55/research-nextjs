@@ -1,38 +1,38 @@
-import React, { MouseEvent, useEffect, Fragment, useState } from 'react';
-import { ColumnType, KEY_ROW_PREFIX } from './TableProps';
-import TableRowCell from './TableRowCell';
-import ContextMenu from './ContextMenu';
+import React, { type MouseEvent, useEffect, Fragment, useState } from 'react'
+import { type ColumnType, KEY_ROW_PREFIX } from './TableProps'
+import TableRowCell from './TableRowCell'
+import ContextMenu from './ContextMenu'
 
 interface Props<T> {
-  data: T[];
-  columns: ColumnType<T>[];
-  isSelectBox?: boolean;
+  data: T[]
+  columns: Array<ColumnType<T>>
+  isSelectBox?: boolean
   checkbox: {
-    handleCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    isCheck: any[];
-  };
-  onRowSelected?: (row: any) => void;
-  isCellEditable?: (params: any) => boolean;
-  processRowUpdate?: (newRow: any, oldRow: any) => void;
-  onBeforeAdd?: (newRow: any, index: number) => boolean;
-  onAfterAdd?: (newRow: any, index: number) => void;
-  onLiveEdit?: (rowId: string, rowModel: T) => void;
-  onKeyUpCell?: (rowId: string, rowModel: T, keyCode: string) => void;
-  onChange?: (rowId: string, rowModel: T) => void;
-  setRowSelected: React.Dispatch<React.SetStateAction<string>>;
+    handleCheck: (e: React.ChangeEvent<HTMLInputElement>) => void
+    isCheck: any[]
+  }
+  onRowSelected?: (row: any) => void
+  isCellEditable?: (params: any) => boolean
+  processRowUpdate?: (newRow: any, oldRow: any) => void
+  onBeforeAdd?: (newRow: any, index: number) => boolean
+  onAfterAdd?: (newRow: any, index: number) => void
+  onLiveEdit?: (rowId: string, rowModel: T) => void
+  onKeyUpCell?: (rowId: string, rowModel: T, keyCode: string) => void
+  onChange?: (rowId: string, rowModel: T) => void
+  setRowSelected: React.Dispatch<React.SetStateAction<string>>
   setContextMenu: React.Dispatch<
-    React.SetStateAction<{
-      isShowed: boolean;
-      x: number;
-      y: number;
-    }>
-  >;
-  rowSelected: string;
-  cellIdFocus: string;
-  setCellIdForcus: React.Dispatch<React.SetStateAction<string>>;
+  React.SetStateAction<{
+    isShowed: boolean
+    x: number
+    y: number
+  }>
+  >
+  rowSelected: string
+  cellIdFocus: string
+  setCellIdForcus: React.Dispatch<React.SetStateAction<string>>
 }
 
-function TableRow<T>({
+function TableRow<T> ({
   data,
   columns,
   processRowUpdate,
@@ -49,24 +49,24 @@ function TableRow<T>({
   onAfterAdd,
   onChange,
   onKeyUpCell,
-  onLiveEdit,
+  onLiveEdit
 }: Props<T>) {
   const handleContextMenu = (e: MouseEvent<HTMLTableRowElement>, itemIndex: string) => {
-    e.preventDefault();
-    const { pageX, pageY } = e;
-    setRowSelected(itemIndex);
-    setContextMenu({ isShowed: true, x: pageX, y: pageY });
-  };
+    e.preventDefault()
+    const { pageX, pageY } = e
+    setRowSelected(itemIndex)
+    setContextMenu({ isShowed: true, x: pageX, y: pageY })
+  }
   const getKeyRow = (row: any) => {
-    return `${KEY_ROW_PREFIX}${row.id}`;
-  };
+    return `${KEY_ROW_PREFIX}${row.id}`
+  }
 
   const handleOnRowSelected = (row: any, _index: number) => {
-    setRowSelected(getKeyRow(row));
-    if (onRowSelected) {
-      onRowSelected(row);
+    setRowSelected(getKeyRow(row))
+    if (onRowSelected != null) {
+      onRowSelected(row)
     }
-  };
+  }
 
   return (
     <>
@@ -77,7 +77,7 @@ function TableRow<T>({
             rowSelected === getKeyRow(item) ? 'bg-gray-200' : ''
           }`}
           role="row"
-          onContextMenu={(e) => handleContextMenu(e, getKeyRow(item))}
+          onContextMenu={(e) => { handleContextMenu(e, getKeyRow(item)) }}
         >
           {isSelectBox && (
             <td className="w-4 p-4" role="cell">
@@ -105,7 +105,7 @@ function TableRow<T>({
               {(column.show || !column.hasOwnProperty('show')) && (
                 <TableRowCell
                   isCellEditable={isCellEditable}
-                  onRowSelected={(row) => handleOnRowSelected(row, itemIndex)}
+                  onRowSelected={(row) => { handleOnRowSelected(row, itemIndex) }}
                   key={`table-row-cell-${columnIndex}`}
                   item={item}
                   processRowUpdate={processRowUpdate}
@@ -123,7 +123,7 @@ function TableRow<T>({
         </tr>
       ))}
     </>
-  );
+  )
 }
 
-export default TableRow;
+export default TableRow

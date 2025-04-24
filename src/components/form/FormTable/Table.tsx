@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import TableHeader from './TableHeader';
-import TableRow from './TableRow';
-import { Props } from './TableProps';
-import ManageColumns from './ManageColumns';
-import { ManageColumnContext } from '@/features/schedule/context/scheduleContext';
-import ContextMenu from './ContextMenu';
+import React, { useEffect, useState } from 'react'
+import TableHeader from './TableHeader'
+import TableRow from './TableRow'
+import { type Props } from './TableProps'
+import ManageColumns from './ManageColumns'
+import { ManageColumnContext } from '@/features/schedule/context/scheduleContext'
+import ContextMenu from './ContextMenu'
 
-function Table<T>({
+function Table<T> ({
   resize = true,
   processRowUpdate,
   onRowSelected,
@@ -18,64 +18,64 @@ function Table<T>({
   selectBox = true,
   onLiveEdit,
   onKeyUpCell,
-  onChange,
+  onChange
 }: Props<T>) {
-  const [isCheckAll, setIsCheckAll] = useState<boolean>(false);
-  const [isCheck, setIsCheck] = useState<any[]>([]);
-  const [cloneData, setCloneData] = useState<T[]>(data);
-  const { showMngColumn } = React.useContext(ManageColumnContext);
-  const [columnsHandle, setColumnsHandle] = useState(columns);
+  const [isCheckAll, setIsCheckAll] = useState<boolean>(false)
+  const [isCheck, setIsCheck] = useState<any[]>([])
+  const [cloneData, setCloneData] = useState<T[]>(data)
+  const { showMngColumn } = React.useContext(ManageColumnContext)
+  const [columnsHandle, setColumnsHandle] = useState(columns)
   const initialContextMenu = {
     isShowed: false,
     x: 0,
-    y: 0,
-  };
-  const [rowSelected, setRowSelected] = useState('');
-  const [contextMenu, setContextMenu] = useState(initialContextMenu);
-  const [cellIdFocus, setCellIdForcus] = useState('');
+    y: 0
+  }
+  const [rowSelected, setRowSelected] = useState('')
+  const [contextMenu, setContextMenu] = useState(initialContextMenu)
+  const [cellIdFocus, setCellIdForcus] = useState('')
 
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCheckAll(!isCheckAll);
+    setIsCheckAll(!isCheckAll)
     setIsCheck(
       Array(data.length)
         .fill(null)
         .map((_, i) => String(i))
-    );
+    )
     if (isCheckAll) {
-      setIsCheck([]);
+      setIsCheck([])
     }
-  };
+  }
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = e.target;
-    setIsCheck([...isCheck, id]);
+    const { id, checked } = e.target
+    setIsCheck([...isCheck, id])
     if (!checked) {
-      setIsCheck(isCheck.filter((item) => item !== id));
+      setIsCheck(isCheck.filter((item) => item !== id))
     }
-  };
+  }
   const closeContextMenu = () => {
-    setContextMenu(initialContextMenu);
-  };
+    setContextMenu(initialContextMenu)
+  }
 
   useEffect(() => {
-    window.addEventListener('resize', closeContextMenu);
-    window.addEventListener('scroll', closeContextMenu);
+    window.addEventListener('resize', closeContextMenu)
+    window.addEventListener('scroll', closeContextMenu)
     return () => {
-      window.removeEventListener('resize', closeContextMenu);
-      window.removeEventListener('scroll', closeContextMenu);
-    };
-  }, []);
+      window.removeEventListener('resize', closeContextMenu)
+      window.removeEventListener('scroll', closeContextMenu)
+    }
+  }, [])
 
   useEffect(() => {
-    const cell = document.getElementById(cellIdFocus);
-    console.log(cell);
-    cell?.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
-    cell?.focus();
-  }, [cellIdFocus]);
+    const cell = document.getElementById(cellIdFocus)
+    console.log(cell)
+    cell?.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' })
+    cell?.focus()
+  }, [cellIdFocus])
 
   return (
     <>
-      {showMngColumn && <ManageColumns columns={columnsHandle} onChangeCheck={(params) => setColumnsHandle(params)} />}
+      {showMngColumn && <ManageColumns columns={columnsHandle} onChangeCheck={(params) => { setColumnsHandle(params) }} />}
       <div className="max-h-96 overflow-x-auto">
         <table className="w-full text-sm text-center">
           <thead className="bg-white border-b-[0.5px] border-gray-300 sticky top-0">
@@ -125,7 +125,7 @@ function Table<T>({
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default Table;
+export default Table

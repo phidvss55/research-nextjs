@@ -1,4 +1,4 @@
-import HelloComponent from "@/components/basetest/HelloComponent"
+import HelloComponent from '@/components/basetest/HelloComponent'
 import { render, screen } from '@testing-library/react'
 
 describe('Index Page', () => {
@@ -15,7 +15,7 @@ describe('Index Page', () => {
   })
 
   it('renders homepage unchanged', () => {
-    const { container } = render(<HelloComponent name={'Another Name'} />);
-    expect(container).toMatchSnapshot();
-  });
+    const { container } = render(<HelloComponent name={'Another Name'} />)
+    expect(container).toMatchSnapshot()
+  })
 })

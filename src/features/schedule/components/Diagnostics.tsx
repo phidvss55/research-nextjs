@@ -1,65 +1,65 @@
-import { TriangleDown, TriangleRight } from '@/assets/icons';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { TriangleDown, TriangleRight } from '@/assets/icons'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
-type CalculatedField = {
-  id: string;
-  label: string;
-  value: number;
-  unit: string;
-};
-type DiagnosticProps<T> = {
-  data: T[];
-  getFirstSeaBuf?: (element: any) => number;
-};
-const defaultSeabuf = (element: any) => element;
-export default function Diagnostic<T>({ data, getFirstSeaBuf = defaultSeabuf }: DiagnosticProps<T>) {
-  const [calculatedFields, setCalculatedFields] = useState<CalculatedField[]>([]);
-  const [isOpen, setOpen] = useState(false);
+interface CalculatedField {
+  id: string
+  label: string
+  value: number
+  unit: string
+}
+interface DiagnosticProps<T> {
+  data: T[]
+  getFirstSeaBuf?: (element: any) => number
+}
+const defaultSeabuf = (element: any) => element
+export default function Diagnostic<T> ({ data, getFirstSeaBuf = defaultSeabuf }: DiagnosticProps<T>) {
+  const [calculatedFields, setCalculatedFields] = useState<CalculatedField[]>([])
+  const [isOpen, setOpen] = useState(false)
   const defaultValue = {
     id: '',
     label: '',
     value: 0,
-    unit: '',
-  };
-  let sumSeaBuf = 0,
-    sumSeaBufSPD = 0,
-    maxSpeed = defaultValue,
-    seaBuffRatio = defaultValue,
-    buffSpeedRatio = defaultValue,
-    largestSeaBuff = getFirstSeaBuf(data),
-    lowestSeaBuff = getFirstSeaBuf(data);
+    unit: ''
+  }
+  let sumSeaBuf = 0
+  let sumSeaBufSPD = 0
+  let maxSpeed = defaultValue
+  let seaBuffRatio = defaultValue
+  let buffSpeedRatio = defaultValue
+  let largestSeaBuff = getFirstSeaBuf(data)
+  let lowestSeaBuff = getFirstSeaBuf(data)
   useEffect(() => {
     data.forEach((field: any) => {
-      sumSeaBuf += field?.sea_buf ? field.sea_buf : 0;
-      sumSeaBufSPD += field?.sea_buf_spd ? field.sea_buf_spd : 0;
+      sumSeaBuf += field?.sea_buf ? field.sea_buf : 0
+      sumSeaBufSPD += field?.sea_buf_spd ? field.sea_buf_spd : 0
       if (largestSeaBuff < field.sea_buf) {
-        largestSeaBuff = field.sea_buf;
+        largestSeaBuff = field.sea_buf
       }
       if (lowestSeaBuff > field.sea_buf) {
-        lowestSeaBuff = field.sea_buf;
+        lowestSeaBuff = field.sea_buf
       }
-    });
+    })
     if (largestSeaBuff && lowestSeaBuff) {
-      maxSpeed = { id: 'max_speed', label: 'Maximum speed', value: largestSeaBuff, unit: 'Kts.' };
+      maxSpeed = { id: 'max_speed', label: 'Maximum speed', value: largestSeaBuff, unit: 'Kts.' }
       seaBuffRatio = {
         id: 'sea_buffer_ratio',
         label: 'Sea Buffer Ratio',
         value: Math.round(((largestSeaBuff - lowestSeaBuff) / sumSeaBuf) * 100),
-        unit: '%',
-      };
+        unit: '%'
+      }
       buffSpeedRatio = {
         id: 'buff_speed_ratio',
         label: 'Buffer Speed Ratio',
         value: Math.round(((largestSeaBuff - lowestSeaBuff) / sumSeaBuf) * 100),
-        unit: '%',
-      };
+        unit: '%'
+      }
     }
-    setCalculatedFields([maxSpeed, seaBuffRatio, buffSpeedRatio]);
-  }, [data]);
+    setCalculatedFields([maxSpeed, seaBuffRatio, buffSpeedRatio])
+  }, [data])
   const handleOpen = () => {
-    setOpen(!isOpen);
-  };
+    setOpen(!isOpen)
+  }
   return (
     <div>
       <div>
@@ -81,5 +81,5 @@ export default function Diagnostic<T>({ data, getFirstSeaBuf = defaultSeabuf }: 
         </div>
       )}
     </div>
-  );
+  )
 }
