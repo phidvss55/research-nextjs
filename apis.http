@@ -1,0 +1,5 @@
+### Get test
+GET http://localhost:8002/ping/100 HTTP/1.1
+
+### Get healthz
+GET http://localhost:3000/api/qr-code HTTP/1.1
