@@ -8,6 +8,20 @@
       "when": 1765198375021,
       "tag": "0000_daily_hercules",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765271634697,
+      "tag": "0001_mysterious_doomsday",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765271838161,
+      "tag": "0002_dark_killmonger",
+      "breakpoints": true
     }
   ]
 }
