@@ -794,6 +794,14 @@
     "@simplewebauthn/server" "^13.1.2"
     zod "^4.1.12"
 
+"@better-auth/stripe@^1.4.7":
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/@better-auth/stripe/-/stripe-1.4.7.tgz#47498e860a68fad8ec6633bf1de73f257179fc08"
+  integrity sha512-Ekvxj0HxOJ93Cma9JTos5vdJipJ20lE6sx9McYEvggvamJWR8RkbaRWN88M+HZ9074o67W9YcQMa1m15QAUezw==
+  dependencies:
+    defu "^6.1.4"
+    zod "^4.1.12"
+
 "@better-auth/telemetry@1.4.5":
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/@better-auth/telemetry/-/telemetry-1.4.5.tgz#adbbe5b194ffa7e1619d4bdf0867a74caee91c5e"
@@ -7191,6 +7199,13 @@ qr.js@0.0.0:
   resolved "https://registry.yarnpkg.com/qr.js/-/qr.js-0.0.0.tgz#cace86386f59a0db8050fa90d9b6b0e88a1e364f"
   integrity sha512-c4iYnWb+k2E+vYpRimHqSu575b1/wKl4XFeJGpFmrJQz5I88v9aY2czh7s0w36srfCM1sXgC/xpoJz5dJfq+OQ==
 
+qs@^6.11.0:
+  version "6.14.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.14.0.tgz#c63fa40680d2c5c941412a0e899c89af60c0a930"
+  integrity sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==
+  dependencies:
+    side-channel "^1.1.0"
+
 querystringify@^2.1.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
@@ -7860,6 +7875,13 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+stripe@^20.0.0:
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-20.0.0.tgz#0c7421425def7d00ca9bc73d0d6c80a5310140c3"
+  integrity sha512-EaZeWpbJOCcDytdjKSwdrL5BxzbDGNueiCfHjHXlPdBQvLqoxl6AAivC35SPzTmVXJb5duXQlXFGS45H0+e6Gg==
+  dependencies:
+    qs "^6.11.0"
 
 strnum@^2.1.0:
   version "2.1.1"

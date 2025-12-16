@@ -10,6 +10,14 @@ import { createAuthMiddleware } from "better-auth/api";
 import { sendWelcomeEmail } from "./emails/welcome";
 import { passkey } from "@better-auth/passkey";
 import { twoFactor } from "better-auth/plugins/two-factor";
+import { stripe } from "@better-auth/stripe";
+import Stripe from "stripe";
+import { STRIPE_PLANS } from "@/constants/stripe";
+import { desc, eq } from "drizzle-orm";
+
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-11-17.clover", // Latest API version as of Stripe SDK v20.0.0
+});
 
 export const auth = betterAuth({
   emailAndPassword: {
@@ -60,7 +68,37 @@ export const auth = betterAuth({
       maxAge: 60 * 5, // 5 minute
     },
   },
-  plugins: [nextCookies(), passkey(), twoFactor()],
+  plugins: [
+    nextCookies(),
+    passkey(),
+    twoFactor(),
+    // stripe({
+    //   stripeClient,
+    //   stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+    //   createCustomerOnSignUp: true,
+    // subscription: {
+    //   authorizeReference: async ({ user, referenceId, action }) => {
+    //     const memberItem = await db.query.member.findFirst({
+    //       where: and(
+    //         eq(member.organizationId, referenceId),
+    //         eq(member.userId, user.id)
+    //       ),
+    //     });
+
+    //     if (
+    //       action === "upgrade-subscription" ||
+    //       action === "cancel-subscription" ||
+    //       action === "restore-subscription"
+    //     ) {
+    //       return memberItem?.role === "owner";
+    //     }
+    //     return memberItem != null;
+    //   },
+    //   enabled: true,
+    //   plans: STRIPE_PLANS,
+    // },
+    // }),
+  ],
   // rateLimit: {
   //   storage: "database",
   // },
@@ -78,6 +116,46 @@ export const auth = betterAuth({
       }
     }),
   },
+  socialProviders: {
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      // mapProfileToUser: (profile) => {
+      //   return {
+      //     favoriteNumber: Number(profile.public_repos) || 0,
+      //   };
+      // },
+    },
+    discord: {
+      clientId: process.env.DISCORD_CLIENT_ID!,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      // mapProfileToUser: () => {
+      //   return {
+      //     // favoriteNumber: 0,
+      //   };
+      // },
+    },
+  },
+  // databaseHooks: {
+  //   session: {
+  //     create: {
+  //       before: async (userSession) => {
+  //         const membership = await db.query.member.findFirst({
+  //           where: eq(member.userId, userSession.userId),
+  //           orderBy: desc(member.createdAt),
+  //           columns: { organizationId: true },
+  //         });
+
+  //         return {
+  //           data: {
+  //             ...userSession,
+  //             activeOrganizationId: membership?.organizationId,
+  //           },
+  //         };
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export const getUserSession = async () => {

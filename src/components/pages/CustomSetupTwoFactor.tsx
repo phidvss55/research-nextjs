@@ -1,14 +1,14 @@
 "use client";
 
-import { authClient } from "@/lib/auth-client";
-import { disable2FA, setup2Fa, verify2FA } from "@/services/auth";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import QRCode from "react-qr-code";
 import { Input } from "../ui/input";
+import { authClient } from "@/lib/auth-client";
+import { disable2FA, setup2Fa, verify2FA } from "@/services/auth";
 import { codeSchema } from "@/schemas/verify2fa.schema";
 
-const Setup2FAComponentCustom = () => {
+const Setup2FAComponent = () => {
   const [twoFAEnabled, setTwoFAEnabled] = useState(false);
   const [data, setData] = useState<any>({});
   const [code, setCode] = useState<string>("");
@@ -162,4 +162,4 @@ const Setup2FAComponentCustom = () => {
   );
 };
 
-export default Setup2FAComponentCustom;
+export default Setup2FAComponent;

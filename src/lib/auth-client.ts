@@ -5,6 +5,7 @@ import {
   twoFactorClient,
 } from "better-auth/client/plugins";
 import { passkeyClient } from "@better-auth/passkey/client";
+import { stripeClient } from "@better-auth/stripe/client";
 
 export const authClient = createAuthClient({
   plugins: [
@@ -15,5 +16,8 @@ export const authClient = createAuthClient({
         window.location.href = "/two-factor";
       },
     }),
+    // stripeClient({
+    //   subscription: true,
+    // }),
   ],
 });
