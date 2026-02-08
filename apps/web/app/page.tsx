@@ -19,6 +19,21 @@ export default function Home() {
               <span className="text-blue-600 hover:underline">Posts</span>
             </Link>
           </li>
+          <li>
+            <Link href="/manager-hub">
+              <span className="text-blue-600 hover:underline">Manager Hub</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/manager-hub/figma">
+              <span className="text-blue-600 hover:underline">Manager Hub — Figma</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/manager-hub/member-department">
+              <span className="text-blue-600 hover:underline">Member & Department (Figma)</span>
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
